@@ -1,7 +1,7 @@
 import React from 'react';
 import {createSearchParams, useNavigate, useParams, useSearchParams} from "react-router-dom";
 
-function ReadPage(props) {
+function ModifyPage(props) {
 
 
 
@@ -16,14 +16,6 @@ function ReadPage(props) {
 
 	console.log(tno)
 
-	const moveToModify = (tno) => {
-		navigate(
-				{
-					pathname: `/todo/modify/${tno}`,
-					search:queryStr
-				}
-		)
-	}
 
 	const moveToList = () => {
 		navigate(
@@ -38,11 +30,7 @@ function ReadPage(props) {
 
 	return (
 			<div className={'text-3xl'}>
-				Todo Read Page {tno}
-
-				<div>
-					<button onClick={() => moveToModify(tno)}>Test Modify</button>
-				</div>
+				Todo Modify Page {tno}
 				<div>
 					<button onClick={moveToList}>Test List</button>
 				</div>
@@ -50,4 +38,4 @@ function ReadPage(props) {
 	);
 }
 
-export default ReadPage;
+export default ModifyPage;
