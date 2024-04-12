@@ -1,5 +1,6 @@
 package org.zerock.mallapi.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public class PageResponseDTO<E> {
 
 
 	// 기본 생성자
+
+	@Builder(builderMethodName = "withAll")
 	public PageResponseDTO(List<E> dtoList, PageRequestDTO pageRequestDTO, long total){
 
 		this.dtoList = dtoList;

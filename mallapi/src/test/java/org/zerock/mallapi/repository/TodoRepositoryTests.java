@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zerock.mallapi.domain.Todo;
+import org.zerock.mallapi.dto.PageRequestDTO;
+import org.zerock.mallapi.service.TodoService;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -21,6 +23,9 @@ public class TodoRepositoryTests {
 
 	@Autowired
 	private TodoRepository todoRepository;
+
+	@Autowired
+	private TodoService todoService;
 
 	@Test
 	public void test1(){
@@ -93,9 +98,17 @@ public class TodoRepositoryTests {
 		// 페이지 번호가 0부터
 	}
 
+//	@Test
+//	public void testSearch1(){
+//		todoRepository.search1();
+//	}
+
 	@Test
-	public void testSearch1(){
-		todoRepository.search1();
+	public void testGetList(){
+
+		PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(11).build();
+
+		log.info(todoService.getList(pageRequestDTO));
 	}
 
 }
