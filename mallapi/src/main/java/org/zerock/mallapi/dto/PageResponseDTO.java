@@ -26,33 +26,38 @@ public class PageResponseDTO<E> {
 	// 기본 생성자
 
 	@Builder(builderMethodName = "withAll")
-	public PageResponseDTO(List<E> dtoList, PageRequestDTO pageRequestDTO, long total){
+	public PageResponseDTO(List<E> dtoList, PageRequestDTO pageRequestDTO, long totalCount) {
 
 		this.dtoList = dtoList;
 		this.pageRequestDTO = pageRequestDTO;
-		this.totalCount = (int)total;
+		this.totalCount = (int)totalCount;
 
+		int end =   (int)(Math.ceil( pageRequestDTO.getPage() / 10.0 )) *  10;
 
-		// 끝페이지 end
-		// pageRequestDTO.getPage() 현재페이지 구하기
-		int end = (int)(Math.ceil(pageRequestDTO.getPage() / 10.0)) * 10;
 		int start = end - 9;
 
+		int last =  (int)(Math.ceil((totalCount/(double)pageRequestDTO.getSize())));
 
-		// 진짜 마지막 페이지
-		int last = (int)(Math.ceil(totalCount / (double)pageRequestDTO.getSize()));
-
-		end = end > last ? last : end;
+		end =  end > last ? last: end;
 
 		this.prev = start > 1;
-		this.next = totalCount > end * pageRequestDTO.getSize();
 
 
-		this.pageNumList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+		this.next =  totalCount > end * pageRequestDTO.getSize();
 
+		this.pageNumList = IntStream.rangeClosed(start,end).boxed().collect(Collectors.toList());
 
-		this.prevPage = prev ? start-1 : 0;
-		this.nextPage = next ? end + 1 : 0;
+		if(prev) {
+			this.prevPage = start -1;
+		}
+
+		if(next) {
+			this.nextPage = end + 1;
+		}
+
+		this.totalPage = this.pageNumList.size();
+
+		this.current = pageRequestDTO.getPage();
 
 	}
 
