@@ -13,6 +13,8 @@ export const getOne = async (tno) => {
 }
 
 
+// async 모든 리턴은 비동기
+
 export const getList = async (pageParam) => {
 
 	const {page, size} = pageParam
