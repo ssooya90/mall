@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import useCustomMove from "../../hooks/useCustomMove";
 import {getList} from "../../api/todoApi";
+import PageComponent from "../common/PageComponent";
 
 
 const initState = {
@@ -18,7 +19,7 @@ const initState = {
 
 const ListComponent = (props) => {
 
-	const {page, size} = useCustomMove()
+	const {page, size, refresh, moveToList} = useCustomMove()
 
 	const [serverData, setServerData] = useState(initState);
 
@@ -29,7 +30,11 @@ const ListComponent = (props) => {
 			setServerData(data);
 		})
 
-	}, [page, size]);
+	}, [page, size, refresh]);
+
+	// 동일 page와 size 일 경우 갱신되지 않기 떄문에 작동이 안됨
+
+
 
 	return (
 			<div className={"border-2 border-blue-100 mt-10 mr-2 ml-2"}>
@@ -61,6 +66,10 @@ const ListComponent = (props) => {
 					)}
 
 				</div>
+
+
+				<PageComponent serverData={serverData} movePage={moveToList}></PageComponent>
+
 			</div>
 	);
 };

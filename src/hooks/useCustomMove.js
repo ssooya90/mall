@@ -1,4 +1,5 @@
 import {createSearchParams, useNavigate, useSearchParams} from "react-router-dom";
+import {useState} from "react";
 
 const getNum = (param, defaultValue) => {
 
@@ -14,6 +15,9 @@ const useCustomMove = () => {
 
 	const navigate = useNavigate();
 
+	// 새로고침을 위한 상태값 추가
+	const [refresh, setRefresh] = useState(false)
+
 	const [queryParams] = useSearchParams()
 
 	const page = getNum(queryParams.get('page'), 1);
@@ -26,14 +30,19 @@ const useCustomMove = () => {
 		let queryStr = ""
 
 		if(pageParam){
-
 			const pageNum = getNum(pageParam.page, 1);
 			const sizeNum = getNum(pageParam.size, 10);
-			queryStr = createSearchParams({pae:pageNum, size:sizeNum}).toString()
+			queryStr = createSearchParams({page:pageNum, size:sizeNum}).toString()
 
 		}else{
 			queryStr = queryDefault
 		}
+
+		console.log(queryStr)
+		console.log("네비게이터")
+
+		// 토글처럼 작동하기 위한 코드
+		setRefresh(!refresh)
 
 		navigate({pathname : `../list`, search:queryStr})
 	}
@@ -47,7 +56,7 @@ const useCustomMove = () => {
 
 	}
 
-	return {moveToList, moveToModify, page, size}
+	return {moveToList, moveToModify, page, size, refresh}
 }
 
 export default useCustomMove
