@@ -26,3 +26,10 @@ export const getList = async (pageParam) => {
 	return res.data
 
 }
+
+export const postAdd = async (todoObj) => {
+
+	const res = await axios.post(`${prefix}/`, todoObj);
+
+	return res.data
+}

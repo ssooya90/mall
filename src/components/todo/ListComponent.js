@@ -19,7 +19,7 @@ const initState = {
 
 const ListComponent = (props) => {
 
-	const {page, size, refresh, moveToList} = useCustomMove()
+	const {page, size, refresh, moveToList, moveToRead} = useCustomMove()
 
 	const [serverData, setServerData] = useState(initState);
 
@@ -46,6 +46,7 @@ const ListComponent = (props) => {
 							<div
 									key={todo.tno}
 									className={"w-full min-w-[400px] p-2 m-2 rounded shadow-md"}
+									onClick={() => moveToRead(todo.tno)}
 							>
 
 
