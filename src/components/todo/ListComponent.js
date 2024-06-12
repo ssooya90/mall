@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import useCustomMove from "../../hooks/useCustomMove";
 import {getList} from "../../api/todoApi";
 import PageComponent from "../common/PageComponent";
+import ResultModal from "../common/ResultModal";
 
 
 const initState = {
@@ -69,9 +70,15 @@ const ListComponent = (props) => {
 				</div>
 
 
+
 				<PageComponent serverData={serverData} movePage={moveToList}></PageComponent>
 
+
+				{/*<ResultModal/>*/}
+
 			</div>
+
+
 	);
 };
 

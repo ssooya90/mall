@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import {postAdd} from "../../api/todoApi";
+import ResultModal from "../common/ResultModal";
+import useCustomMove from "../../hooks/useCustomMove";
 
 
 const initState = {
@@ -11,6 +14,10 @@ function AddComponent(props) {
 
 	const [todo, setTodo] = useState({...initState}); // 새로 만들어서 처리?
 
+	const [result, setResult] = useState(null); // 결과를 상태로 보관, 초기 값은 unll
+
+	const {moveToList} = useCustomMove()
+
 	const handleChangeTodo = (e) => {
 		// todo[title] // 동적처리
 
@@ -21,7 +28,21 @@ function AddComponent(props) {
 	}
 
 	const handleClickAdd = () => {
-		console.log(todo)
+		// console.log(todo)
+
+		postAdd(todo).then(result => {
+
+			console.log(result)
+			setResult(result.TNO)
+			// 입력 완료 후 기존 항목 제거
+
+			setTodo({...initState})
+		})
+	}
+
+	const closeModal = () => {
+		setResult(null)
+		moveToList()
 	}
 
 	return (
@@ -54,6 +75,17 @@ function AddComponent(props) {
 						        className="rounded p-4 w-36 bg-blue-500 text-xl text-white" > ADD </button>
 					</div>
 				</div>
+
+
+				{/*result 상태가 있을 경우 모달을 띄움*/}
+				{result ? <ResultModal
+				title={'Add Result'}
+				content={`New ${result} Added`}
+				callbackFn={closeModal}
+				/>
+				: <></>}
+
+
 			</div>
 	);
 }
