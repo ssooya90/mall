@@ -7,7 +7,7 @@ function ResultModal({title, content, callbackFn}) {
 				<div className={"absolute bg-white shadow dark:bg-white opacity-100 w-1/4 rounded mt-10 mb-10 px-6 min-w[600px]"}>
 
 					<div className={"justify-center bg-warning-400 mt-6 mb-6 text-2xl border-b-4 border-gray-500"}>
-						{title ? 'title' : title}
+						{title}
 					</div>
 
 					<div className={"text-4xl border-orange-400 border-b-4- pt-4 pb-4"}>

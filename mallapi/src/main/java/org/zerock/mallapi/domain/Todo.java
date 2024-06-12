@@ -42,4 +42,8 @@ public class Todo {
 	public void setComplete(boolean complete) {
 		this.complete = complete;
 	}
+
+	public void setDueDate(LocalDate dueDate) {
+		this.dueDate = dueDate;
+	}
 }

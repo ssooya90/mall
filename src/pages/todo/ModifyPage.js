@@ -1,5 +1,6 @@
 import React from 'react';
 import {createSearchParams, useNavigate, useParams, useSearchParams} from "react-router-dom";
+import ModifyComponent from "../../components/todo/modifyComponent";
 
 function ModifyPage(props) {
 
@@ -16,7 +17,6 @@ function ModifyPage(props) {
 
 	console.log(tno)
 
-
 	const moveToList = () => {
 		navigate(
 				{
@@ -27,13 +27,14 @@ function ModifyPage(props) {
 	}
 
 
-
 	return (
-			<div className={'text-3xl'}>
-				Todo Modify Page {tno}
-				<div>
-					<button onClick={moveToList}>Test List</button>
+
+			<div className={"p-4 w-full bg-white"}>
+				<div className={"text-3xl font-extrabold"}>
+					Todo Modify Page
 				</div>
+
+				<ModifyComponent tno={tno}/>
 			</div>
 	);
 }
