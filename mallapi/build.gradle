@@ -52,6 +52,9 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
 
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.19'
+
+
 }
 
 tasks.named('bootBuildImage') {
