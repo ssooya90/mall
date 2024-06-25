@@ -50,6 +50,10 @@ public class Product {
 		this.pname = name;
 	}
 
+	public void setDel(boolean delFlag){
+		this.delFlag = delFlag;
+	}
+
 	public void addImgae(ProductImage image) {
 		image.setOrd(imageList.size());
 		imageList.add(image);
