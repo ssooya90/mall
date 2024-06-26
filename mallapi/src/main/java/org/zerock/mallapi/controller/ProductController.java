@@ -7,7 +7,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.zerock.mallapi.dto.PageRequestDTO;
+import org.zerock.mallapi.dto.PageResponseDTO;
 import org.zerock.mallapi.dto.ProductDTO;
+import org.zerock.mallapi.service.ProductService;
 import org.zerock.mallapi.util.CustomFileUtil;
 
 import java.util.List;
@@ -21,6 +24,8 @@ public class ProductController {
 
 	private final CustomFileUtil fileUtil;
 
+	private final ProductService productService;
+
 	// 파일데이터는 json으로 못 받음
 	@PostMapping("/")
 	public Map<String, String> register(ProductDTO productDTO) throws Exception {
@@ -30,7 +35,7 @@ public class ProductController {
 		List<MultipartFile> files = productDTO.getFiles();
 		List<String> uploadedFileNames = fileUtil.saveFiles(files);
 
-		productDTO.setUploadedFileNames(uploadedFileNames);
+		productDTO.setUploadFileNames(uploadedFileNames);
 
 		log.info(uploadedFileNames);
 
@@ -43,6 +48,13 @@ public class ProductController {
 	public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName) throws Exception {
 
 		return fileUtil.getFile(fileName);
+
+	}
+
+	@GetMapping("/list")
+	public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO){
+
+		return productService.getList(pageRequestDTO);
 
 	}
 
