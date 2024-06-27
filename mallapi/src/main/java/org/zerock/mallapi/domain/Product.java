@@ -35,7 +35,6 @@ public class Product {
 	private List<ProductImage> imageList = new ArrayList<>();
 
 
-
 	public void setPrice(int price) {
 		this.price = price;
 	}
@@ -50,7 +49,7 @@ public class Product {
 		this.pname = name;
 	}
 
-	public void setDel(boolean delFlag){
+	public void isDelFlag(boolean delFlag){
 		this.delFlag = delFlag;
 	}
 
@@ -72,4 +71,5 @@ public class Product {
 	public void clearList() {
 		this.imageList.clear();
 	}
+
 }

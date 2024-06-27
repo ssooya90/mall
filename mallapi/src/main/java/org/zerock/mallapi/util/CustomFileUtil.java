@@ -68,6 +68,7 @@ public class CustomFileUtil {
 
 				// 원본파일 업로드
 				Files.copy(file.getInputStream(), savePath);
+				uploadNames.add(savedName);
 
 				// 이미지인 경우 썸네일
 				String contentType = file.getContentType(); // Mime type
