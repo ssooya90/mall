@@ -100,10 +100,8 @@ public class ProductController {
 		List<String> uploadedFileNames = productDTO.getUploadFileNames();
 
 		if(currentUploadFileName != null || !currentUploadFileName.isEmpty()){
-
 			// 1. 업로드된 파일이 있다면 원래파일 + 새로운파일로 합침
 			uploadedFileNames.addAll(currentUploadFileName);
-
 		}
 
 		productService.modify(productDTO);
@@ -126,10 +124,21 @@ public class ProductController {
 
 	}
 
+	@DeleteMapping("/{pno}")
+	public Map<String, String> remove(@PathVariable Long pno) throws Exception {
+
+		List<String> oldFileNames = productService.get(pno).getUploadFileNames();
+
+		productService.remove(pno);
+		fileUtil.deleteFiles(oldFileNames);
+
+		return Map.of("RESULT","SUCCESS");
+
+	}
 
 
 
 
 
 
-}
+	}
