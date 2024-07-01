@@ -56,7 +56,12 @@ public class ProductController {
 
 		log.info(uploadedFileNames);
 
+
 		Long pno = productService.register(productDTO);
+
+
+		Thread.sleep(2000);
+
 
 		return Map.of("result",pno);
 
