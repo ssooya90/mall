@@ -29,6 +29,13 @@ const useCustomMove = () => {
 
 		let queryStr = ""
 
+		console.log("디폴트")
+		console.log(queryDefault)
+
+
+		console.log("페이지 파람")
+		console.log(pageParam)
+
 		if(pageParam){
 			const pageNum = getNum(pageParam.page, 1);
 			const sizeNum = getNum(pageParam.size, 10);
