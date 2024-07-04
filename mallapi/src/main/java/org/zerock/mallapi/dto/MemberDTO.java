@@ -4,7 +4,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MemberDTO extends User {
@@ -25,6 +27,18 @@ public class MemberDTO extends User {
 		this.nickname = nickname;
 		this.social = social;
 		this.roleNames = roleNames;
+	}
+
+	public Map<String, Object> getClaims(){
+
+		Map<String, Object> dataMap = new HashMap<>();
+
+		dataMap.put("email",email);
+		dataMap.put("pw",pw);
+		dataMap.put("nickname",nickname);
+		dataMap.put("social",social);
+
+		return dataMap;
 	}
 
 
