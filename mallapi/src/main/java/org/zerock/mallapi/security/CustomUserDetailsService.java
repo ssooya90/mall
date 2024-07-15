@@ -30,6 +30,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Not Found");
 		}
 
+		System.out.println("HERE");
+
 		MemberDTO memberDTO = new MemberDTO(
 				member.getEmail()
 				, member.getPw()
@@ -40,9 +42,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 				.map(memberRole -> memberRole.name()).collect(Collectors.toList()));
 
 
+		log.info("LOG CHECK");
 		log.info(memberDTO);
 
 
-		return null;
+		return memberDTO;
 	}
 }
