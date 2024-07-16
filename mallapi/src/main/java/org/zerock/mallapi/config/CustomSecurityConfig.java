@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +17,14 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.zerock.mallapi.security.filter.JWTCheckFilter;
 import org.zerock.mallapi.security.handler.APILoginFailHandler;
 import org.zerock.mallapi.security.handler.APILoginSuccessHandler;
+import org.zerock.mallapi.security.handler.CustomAccessDeniedHandler;
 
 import java.util.Arrays;
 
 @Configuration
 @Log4j2
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class CustomSecurityConfig {
 
 
@@ -51,6 +54,12 @@ public class CustomSecurityConfig {
 
 		// UsernamePasswordAuthenticationFilter 필터가 작동하기 전에 new JWTCheckFilter를 실행시킴
 		http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		http.exceptionHandling(config -> {
+
+			config.accessDeniedHandler(new CustomAccessDeniedHandler());
+			
+		});
 
 		return http.build();
 
