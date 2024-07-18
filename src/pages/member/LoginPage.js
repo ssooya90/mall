@@ -11,7 +11,7 @@ const LoginPage = () => {
 
 					<div className={"text-2xl"}>
 
-						Login age
+						Login Page
 
 					</div>
 
