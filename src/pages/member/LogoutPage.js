@@ -1,6 +1,7 @@
 import React from 'react';
 import BasicMenu from "../../components/menus/BasicMenu";
 import LoginComponent from "../../components/member/LoginComponent";
+import LogoutComponent from "../../components/member/LogoutComponent";
 
 const LoginPage = () => {
 	return (
@@ -10,7 +11,7 @@ const LoginPage = () => {
 
 				<div className={"flex flex-wrap w-full h-full justify-center items-center border-2"}>
 
-					<LoginComponent/>
+					<LogoutComponent/>
 
 				</div>
 				
