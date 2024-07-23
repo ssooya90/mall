@@ -1,8 +1,15 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {loginPost} from "../api/memberApi";
+import {getCookie, removeCookie, setCookie} from "../util/cookieUtil";
 
 const initState = {
 	email: ''
+}
+
+const loadMemberCookie = () => {
+	const memberInfo = getCookie('member')
+	console.log(memberInfo)
+	return memberInfo;
 }
 
 export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => loginPost(param))
@@ -10,7 +17,7 @@ export const loginPostAsync = createAsyncThunk('loginPostAsync', (param) => logi
 const loginSlice = createSlice({
 
 	name: 'loginSlice',
-	initialState: initState,
+	initialState: loadMemberCookie() || initState,
 
 	// reducers 금고지기와 같은 개념
 	reducers: {
@@ -30,6 +37,8 @@ const loginSlice = createSlice({
 		logout: () => {
 			console.log("logout.....")
 
+			removeCookie('member')
+
 			return {...initState}
 		},
 	},
@@ -41,7 +50,11 @@ const loginSlice = createSlice({
 
 			const payload = action.payload
 
-			console.log(payload)
+
+			// 에러가 없을 경우
+			if(!payload.error){
+				setCookie("member",JSON.stringify(payload))
+			}
 
 			return payload
 
