@@ -28,6 +28,15 @@ function LoginComponent() {
 	const handleClickLogin = (e) => {
 
 		dispatch(loginPostAsync(loginParam))
+				.unwrap()
+				.then(data => {
+
+					console.log("after unwrap")
+					console.log(data)
+
+
+
+				})
 	}
 
 	return (
