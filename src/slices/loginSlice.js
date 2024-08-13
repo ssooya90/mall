@@ -29,9 +29,12 @@ const loginSlice = createSlice({
 
 			console.log("login.....", action)
 
-			console.log(action.payload)
+			console.log(action.payload) // 실데이터
 
-			return {email: action.payload.email}
+			setCookie("member", JSON.stringify(action.payload), 1)
+			return action.payload
+
+			// return {email: action.payload.email}
 			// 리턴을 하면 새로운 상태가 됨
 		},
 		logout: () => {

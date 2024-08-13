@@ -43,7 +43,7 @@ export const getMemberWithAccessToken = async (accessToken) => {
 	console.log("HERE")
 	console.log(accessToken)
 
-	const res = axios.get(`${API_SERVER_HOST}/api/member/kakao?accessToken=${accessToken}`)
+	const res = await axios.get(`${API_SERVER_HOST}/api/member/kakao?accessToken=${accessToken}`)
 
 	return res.data;
 
