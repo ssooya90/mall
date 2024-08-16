@@ -37,5 +37,17 @@ public class Member {
 		memberRoleList.clear();
 	}
 
+	public void changeNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void changePw(String pw){
+		this.pw = pw;
+	}
+
+	public void changeSocial(boolean social) {
+		this.social = social;
+	}
+
 
 }

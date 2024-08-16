@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.zerock.mallapi.domain.Member;
 import org.zerock.mallapi.domain.MemberRole;
 import org.zerock.mallapi.dto.MemberDTO;
+import org.zerock.mallapi.dto.MemberModifyDTO;
 import org.zerock.mallapi.repository.MemberRepository;
 
 import java.util.LinkedHashMap;
@@ -30,7 +31,20 @@ public class MemberServiceImpl implements MemberService{
 	private final PasswordEncoder passwordEncoder;
 
 
+	@Override
+	public void modifyMember(MemberModifyDTO memberModifyDTO) {
 
+		Optional<Member> result = memberRepository.findById(memberModifyDTO.getEmail());
+
+		Member member = result.orElseThrow();
+
+		member.changeNickname(memberModifyDTO.getNickname());
+		member.changeSocial(false);
+		member.changePw(passwordEncoder.encode(memberModifyDTO.getPw()));
+
+		memberRepository.save(member);
+
+	}
 
 	@Override
 	public MemberDTO getKakaoMember(String accessToken) {
