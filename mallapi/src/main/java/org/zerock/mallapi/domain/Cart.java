@@ -23,6 +23,6 @@ public class Cart {
 
 	@OneToOne
 	@JoinColumn(name="member_owner") // 컬럼명을 사용하는 이유는 인덱스를 쓰기 위해서
-	private Member member;
+	private Member owner;
 
 }
