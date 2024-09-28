@@ -1,5 +1,6 @@
 import React from 'react';
 import BasicMenu from "../components/menus/BasicMenu";
+import CartComponent from "../components/menus/CartComponent";
 
 function BasicLayout({children}) {
 	return (
@@ -12,7 +13,9 @@ function BasicLayout({children}) {
 					<main className="bg-sky-300 md:w-2/3 lg:w-3/4 px-5 py-5">{children}</main>
 					{/* 상단 여백 py-40 제거 flex 제거 */}
 					<aside className="bg-green-300 md:w-1/3 lg:w-1/4 px-5 flex py-5">
-						<h1 className="text-2xl md:text-4xl">Sidebar</h1>
+
+						<CartComponent/>
+
 					</aside>
 				</div>
 			</>

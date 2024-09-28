@@ -71,6 +71,8 @@ public class CartServiceImpl implements CartService{
 			cartItem.changeQty(qty);
 		}
 
+		//상품 아이템 저장
+		cartItemRepository.save(cartItem);
 
 		return getCartItems(email);
 	}
