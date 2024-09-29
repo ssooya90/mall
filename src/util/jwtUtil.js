@@ -2,49 +2,43 @@ import axios from "axios";
 import {getCookie, setCookie} from "./cookieUtil";
 import {API_SERVER_HOST} from "../api/todoApi";
 
-
 const jwtAxios = axios.create();
 
-const refreshJWT = async (accessToken, refreshToken) => {
+const refreshJWT =  async (accessToken, refreshToken) => {
 
 	const host = API_SERVER_HOST
 
-	const header = {headers : {'Authorization' : `Bearer ${accessToken}`}}
+	const header = {headers: {"Authorization":`Bearer ${accessToken}`}}
 
-	const res = await axios.get(`${host}/api/member/refresh?refreshToken=${refreshToken}`,header)
+	const res = await axios.get(`${host}/api/member/refresh?refreshToken=${refreshToken}`, header)
 
-	// res data는 새로 만들어진 access 토큰과 refresh 토큰임
+	console.log("----------------------")
 	console.log(res.data)
 
-	return res.data;
-
+	return res.data
 }
 
 
+
 const beforeReq = (config) => {
+	console.log("before request.............")
 
-	console.log(config)
-	console.log("beofre request....")
+	const memberInfo = getCookie("member")
 
-	const memberInfo = getCookie('member')
-
-	if(!memberInfo){
-
-		console.log("MEMBER NOT FOUND")
-
-		return Promise.reject({
-			response: {
-				data : {
-					error : "REQUIRE_LOGIN"
+	if( !memberInfo ) {
+		console.log("Member NOT FOUND")
+		return Promise.reject(
+				{response:
+							{data:
+										{error:"REQUIRE_LOGIN"}
+							}
 				}
-			}
-		})
+		)
 	}
 
 	const {accessToken} = memberInfo
 
-	console.log("------------------" + accessToken)
-
+	// Authorization 헤더 처리
 	config.headers.Authorization = `Bearer ${accessToken}`
 
 	return config
@@ -61,22 +55,31 @@ const requestFail = (err) => {
 
 const beforeRes = async (res) => {
 
-	console.log("before return response")
+	console.log("before return response...........")
 
-	const data = res.date
+	const data = res.data
 
-	if(data && data.error == 'ERROR_ACCESS_TOKEN'){
+	console.log("DATA")
+	console.log(data)
+
+	if(data && data.error === 'ERROR_ACCESS_TOKEN'){
 
 		const memberCookieValue = getCookie('member');
 
+		console.log("멤버쿠키")
+		console.log(memberCookieValue)
+
 		const result = await refreshJWT(memberCookieValue.accessToken, memberCookieValue.refreshToken)
+
+		console.log("새로운 쿠키값")
+		console.log(result)
 
 		// 새로운 억세스, 리프레쉬 토큰이 온다
 
 		memberCookieValue.accessToken = result.accessToken
 		memberCookieValue.refreshToken = result.refreshToken
 
-		setCookie('member',JSON.stringify(memberCookieValue), 1)
+		// setCookie('member',JSON.stringify(memberCookieValue), 1)
 
 		const origianlRequest = res.config
 		origianlRequest.headers.Authorization = `Bearer ${memberCookieValue.accessToken}`
@@ -89,12 +92,8 @@ const beforeRes = async (res) => {
 
 
 const responseFail = (err) => {
-
-	console.log("response error.......")
-
-	return Promise.reject(err)
-
-
+	console.log("response fail error.............")
+	return Promise.reject(err);
 }
 
 

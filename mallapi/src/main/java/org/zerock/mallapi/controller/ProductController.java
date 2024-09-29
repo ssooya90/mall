@@ -81,12 +81,27 @@ public class ProductController {
 	@GetMapping("/list")
 	public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO){
 
+		try {
+			Thread.sleep(2000);
+			// 2초를 준 이유는 상태 변화를 보려고.
+		} catch (InterruptedException e){
+			throw new RuntimeException(e);
+		}
+
 		return productService.getList(pageRequestDTO);
 
 	}
 
 	@GetMapping("/{pno}")
 	public ProductDTO read(@PathVariable Long pno) throws Exception {
+
+		try {
+			Thread.sleep(2000);
+			// 2초를 준 이유는 상태 변화를 보려고.
+		} catch (InterruptedException e){
+			throw new RuntimeException(e);
+		}
+
 		return productService.get(pno);
 	}
 

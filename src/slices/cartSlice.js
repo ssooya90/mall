@@ -9,8 +9,6 @@ import {getCartItems, postChangeCart} from "../api/cartApi";
 // extra reducer로 동작 시키기 위해서 사용
 export const getCartItemsAsync = createAsyncThunk('getCartItemsAsync', () => {
 
-	console.log("getCartItems()")
-
 	return getCartItems();
 })
 
@@ -32,21 +30,12 @@ const cartSlice = createSlice({
 		builder
 				.addCase(getCartItemsAsync.fulfilled, (state, action) => {
 
-					console.log("#### 슬라이스")
-					console.log("getCartItemsAsync.fulfilled")
-					console.log(action.payload)
-
 					return action.payload
 				})
 
 				.addCase(postChangeCartAsync.fulfilled, (state, action) => {
 
-					console.log("postChangeCartAsync.fulfilled")
-
-					console.log(action)
-
 					// action.payload가 실제 데이터
-
 					return action.payload
 
 				})

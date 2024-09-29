@@ -9,9 +9,6 @@ function CartComponent() {
 	const {isLogin, loginState} = useCustomLogin()
 	const {refreshCart, cartItems, changeCart} = useCustomCart()
 
-	console.log("로그로그")
-
-
 	useEffect(() => {
 
 		if(isLogin){

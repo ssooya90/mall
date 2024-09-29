@@ -7,13 +7,9 @@ const host = `${API_SERVER_HOST}/api/cart`
 
 export const getCartItems = async () => {
 
-	console.log("items 실행 전")
-
 	const res = await jwtAxios.get(`${host}/items`)
 
-	console.log("items 실행 후")
-	console.log(res.data)
-	
+
 	return res.data
 }
 
