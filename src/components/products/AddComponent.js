@@ -3,6 +3,7 @@ import {postAdd} from "../../api/productsApi";
 import FetchingModal from "../common/FetchingModal";
 import ResultModal from "../common/ResultModal";
 import useCustomMove from "../../hooks/useCustomMove";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 
 
 /* 상품정의
@@ -19,16 +20,22 @@ const initState = {
 	files: []
 }
 
+
+
 // 1번 방식 new FomrData() => Post 방식
 // 2번 방식 new FomrData() => Put 방식
 
 function AddComponent(props) {
 
 	const [product, setProduct] = useState(initState)
-	const [fetch, setFetch] = useState(false)
-	const [result, setResult] = useState(false)
+	// const [fetch, setFetch] = useState(false)
+	// const [result, setResult] = useState(false)
 
 	const {moveToList} = useCustomMove();
+
+	const addMutation = useMutation({
+		mutationFn: (product) => postAdd(product),
+	});
 
 	const uploadRef = useRef() // 돔 노드 식별
 
@@ -76,26 +83,33 @@ function AddComponent(props) {
 		// 	// setTodo({...initState})
 		// })
 
-		setFetch(true);
-		postAdd(formData).then(result => {
+		// setFetch(true);
 
-			setFetch(false);
+		addMutation.mutate(formData);
 
-			console.log("리절트")
-			console.log(result)
-
-			setResult(result.result)
-
-			// console.log(result);
-			//
-			// setProduct({...initState})
-
-		})
+		// postAdd(formData).then(result => {
+		//
+		// 	setFetch(false);
+		//
+		// 	console.log("리절트")
+		// 	console.log(result)
+		//
+		// 	setResult(result.result)
+		//
+		// 	// console.log(result);
+		// 	//
+		// 	// setProduct({...initState})
+		//
+		// })
 	}
 
+	const queryClient = useQueryClient();
+
 	const closeModal = () => {
-		setResult(null);
-		moveToList();
+
+		queryClient.invalidateQueries("products/list")
+		// setResult(null);
+		moveToList({page:1});
 	}
 
 
@@ -148,11 +162,13 @@ function AddComponent(props) {
 					</div>
 				</div>
 
-				{fetch ? <FetchingModal/> : <></>}
-				{result ? <ResultModal
+				{addMutation.isPending ? <FetchingModal/> : <></>}
+
+				{addMutation.isSuccess ? <ResultModal
 						callbackFn={closeModal}
 						title={"Product Add Result"}
-						content = {`${result} 번 상품 등록 완료`}
+						// content = {`${result} 번 상품 등록 완료`}
+						content = {`${addMutation.data.result} 번 상품 등록 완료`}
 				/> : <></>}
 
 			</div>

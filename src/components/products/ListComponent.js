@@ -28,17 +28,14 @@ function ListComponent(props) {
 	const {data, isFetching, isError} = useQuery({
 		queryKey : ['products/list', {page,size,refresh}], // 키가 같으면 이미 데이터가 존재하는 것으로 간주하
 		queryFn : () => getList({page, size}),
-		staleTime : 1000 * 3
+		staleTime : 1000 * 10
 
 	})
 
 	// const queryClient = useQueryClient();
 
 	const handleClickPage = (pageParam) => {
-
 		moveToList(pageParam)
-
-
 	}
 
 	const serverData = data || initState;
