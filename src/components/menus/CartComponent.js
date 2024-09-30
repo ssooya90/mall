@@ -3,21 +3,27 @@ import useCustomLogin from "../../hooks/useCustomLogin";
 import useCustomCart from "../../hooks/useCustomCart";
 import CartItemComponent from "../cart/CartItemComponent";
 import loginSlice from "../../slices/loginSlice";
+import {useRecoilValue} from "recoil";
+import {cartTotalState} from "../../atoms/cartState";
 
 function CartComponent() {
 
 	const {isLogin, loginState} = useCustomLogin()
-	const {refreshCart, cartItems, changeCart} = useCustomCart()
+	// const {refreshCart, cartItems, changeCart} = useCustomCart()
 
-	useEffect(() => {
+	const {cartItems, changeCart} = useCustomCart()
 
-		if(isLogin){
+	const totalValue = useRecoilValue(cartTotalState)
 
-			refreshCart()
-
-		}
-
-	}, [isLogin]);
+	// useEffect(() => {
+	//
+	// 	if(isLogin){
+	//
+	// 		refreshCart()
+	//
+	// 	}
+	//
+	// }, [isLogin]);
 
 	return (
 			<div className={"w-full"}>

@@ -9,11 +9,11 @@ function KakaoRedirectPage(props) {
 
 	const [searchParams] = useSearchParams()
 
-	const {moveToPath} = useCustomLogin()
+	const {moveToPath, saveAsCookie} = useCustomLogin()
 
 	const authCode = searchParams.get('code')
 
-	const dispatch = useDispatch() // 리듀서
+	// const dispatch = useDispatch() // 리듀서
 
 	useEffect(() => {
 
@@ -24,7 +24,8 @@ function KakaoRedirectPage(props) {
 				console.log("-------------------------")
 				console.log(memberInfo)
 
-				dispatch(login(memberInfo))
+				saveAsCookie(memberInfo)
+				// dispatch(login(memberInfo))
 
 				if(memberInfo && memberInfo.social){
 					moveToPath("/member/modify")

@@ -1,27 +1,54 @@
 import {Navigate, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {loginPostAsync, logout} from "../slices/loginSlice";
+import {login, loginPostAsync, logout} from "../slices/loginSlice";
+import {useRecoilState, useResetRecoilState} from "recoil";
+import {signinState} from "../atoms/signinState";
+import {removeCookie, setCookie} from "../util/cookieUtil";
+import {loginPost} from "../api/memberApi";
+import {cartState} from "../atoms/cartState";
 
 
 const useCustomLogin = () => {
 
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
-
-	const loginState = useSelector(state => state.loginSlice)
-
+	const [loginState , setLoginState] = useRecoilState(signinState)
+	const resetState = useResetRecoilState(signinState)
+	const resetCartState = useResetRecoilState(cartState)
 
 	const isLogin = loginState.email ? true : false
 
+
+	const navigate = useNavigate()
+
+	// const dispatch = useDispatch()
+	// const loginState = useSelector(state => state.loginSlice)
+
+
+
 	const doLogin = async(loginParam) => {
 
-		const action = await dispatch(loginPostAsync(loginParam))
-		return action.payload
+		const result = await loginPost(loginParam)
+
+		saveAsCookie(result)
+
+		return result;
+
+		// const action = await dispatch(loginPostAsync(loginParam))
+		// return action.payload
+	}
+
+	// 리코용일
+	const saveAsCookie = (data) => {
+		setCookie("member",JSON.stringify(data),1)
+		setLoginState(data)
 	}
 
 	const doLogout = () => {
 
-		dispatch(logout())
+		removeCookie('member');
+		resetState();
+		resetCartState();
+
+		// dispatch(logout())
 	}
 
 	const moveToPath = (path) =>{
@@ -36,7 +63,7 @@ const useCustomLogin = () => {
 		return <Navigate replace to={"/member/login"}/>
 	}
 
-	return  {loginState, isLogin, doLogin, doLogout, moveToPath, moveToLogin, moveToLoginReturn}
+	return  {loginState, isLogin, doLogin, doLogout, moveToPath, moveToLogin, moveToLoginReturn, saveAsCookie}
 
 
 
